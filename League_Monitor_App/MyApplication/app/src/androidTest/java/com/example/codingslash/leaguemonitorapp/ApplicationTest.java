@@ -1,4 +1,4 @@
-package com.example.codingslash.leaguemonitor;
+package com.example.codingslash.leaguemonitorapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

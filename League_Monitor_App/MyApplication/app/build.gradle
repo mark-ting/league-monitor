@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.codingslash.leaguemonitor"
+        applicationId "com.example.codingslash.leaguemonitorapp"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1

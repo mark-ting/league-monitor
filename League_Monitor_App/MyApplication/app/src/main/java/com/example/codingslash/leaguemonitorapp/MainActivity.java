@@ -1,4 +1,4 @@
-package com.example.codingslash.leaguemonitor;
+package com.example.codingslash.leaguemonitorapp;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
