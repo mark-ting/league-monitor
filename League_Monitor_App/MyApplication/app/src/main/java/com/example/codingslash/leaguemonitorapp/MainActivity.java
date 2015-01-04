@@ -1,5 +1,6 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,9 +16,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void ping_test(View view)
+    public void ping_activity_start(View view)
     {
-        System.out.println("Ping time: " + PingTimer.get_ping_time("www.google.com"));
+        Intent intent = new Intent(this, PingTestActivity.class);
+        startActivity(intent);
     }
 
     @Override

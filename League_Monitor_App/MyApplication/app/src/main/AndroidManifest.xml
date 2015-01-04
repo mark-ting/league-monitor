@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PingTest"
+            android:name=".PingTestActivity"
             android:label="@string/title_activity_ping_test"
             android:parentActivityName=".MainActivity" >
             <meta-data

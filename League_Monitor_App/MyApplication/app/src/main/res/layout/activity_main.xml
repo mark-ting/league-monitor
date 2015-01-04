@@ -17,7 +17,7 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="ping_test"
-        android:nestedScrollingEnabled="true" />
+        android:onClick="run_ping_test"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>
