@@ -3,6 +3,8 @@ package com.example.codingslash.leaguemonitorapp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Richard on 1/3/2015.
@@ -10,8 +12,11 @@ import java.io.InputStreamReader;
 public class PingTest {
 
     // reference/match strings
-    private static String pingpath = "/system/bin/ping -c 8 ";
-    private static String timematch = ", time ";
+    private static int numpings = 8;
+
+    private static String pingpath = "/system/bin/ping -c ";
+    private static Pattern timepattern = Pattern.compile(", time (\\d+)ms");
+
 
     // store class vars
     private String url;
@@ -28,7 +33,7 @@ public class PingTest {
     public String ping() {
         try {
             Process process = Runtime.getRuntime().exec(
-                    pingpath + url);
+                    pingpath + numpings + " " + url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
             int i;
@@ -54,7 +59,12 @@ public class PingTest {
             ping();
         }
 
-        return Integer.parseInt(res.substring(res.lastIndexOf(timematch) + timematch.length()));
+        Matcher matcher = timepattern.matcher(res);
+        if(matcher.find()) {
+            return (int)(Integer.parseInt(matcher.group(1))/numpings);
+        } else {
+            return -1;
+        }
     }
 
 }

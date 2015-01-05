@@ -1,8 +1,12 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,31 +16,60 @@ import android.widget.TextView;
 
 public class PingTestActivity extends ActionBarActivity {
 
+    public static final String TAG = "PingTestActivity";
+
+    ProgressDialog progressdialog;
+
     private class PingTask extends AsyncTask<String, Void, Integer> {
 
-        // set up the progress dialog, disable button
+        private Context context;
+        private PowerManager.WakeLock wakelock;
+
+        public PingTask(Context contextin) {
+            context = contextin;
+        }
+
+        // wake lock, show the progress dialog, disable button
+        @Override
         public void onPreExecute() {
-            // set up progress dialog
-                // TODO
+            Log.d(TAG, "onPreExecute");
+            // take CPU lock to prevent CPU from going off if the user
+            // presses the power button during download
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+           wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    getClass().getName());
+            wakelock.acquire();
+
+            // show progress dialog
+            progressdialog.show();
 
             // disable button
             ((Button)findViewById(R.id.button_ping_test)).setClickable(false);
         }
 
         // run the ping test
+        @Override
         public Integer doInBackground(String... str) {
+            Log.d(TAG, "doInBackground");
+
             PingTest p = new PingTest(str[0]);
             return p.ping_time();
         }
 
-        // display average ping time, hide progress dialog, enable button
+        // display average ping time, hide progress dialog, enable button, release wakelock
+        @Override
         public  void onPostExecute(Integer num) {
+            Log.d(TAG, "onPostExecute");
+
             // display the times
-            TextView t = (TextView)findViewById(R.id.button_ping_test);
+            TextView t = (TextView)findViewById(R.id.text_ping_time);
             t.setText(num + " ms");
 
             // hide progress dialog
-                // TODO
+                progressdialog.hide();
+
+            // release wakelock
+            wakelock.release();
 
             // enable button
             ((Button)findViewById(R.id.button_ping_test)).setClickable(true);
@@ -44,13 +77,20 @@ public class PingTestActivity extends ActionBarActivity {
     }
 
     public void run_ping_test(View view) {
-        // TODO: do the asynctask call
+        // execute the PingTask
+        new PingTask(this).execute("www.google.com");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_test);
+
+        // instantiate private fields
+        progressdialog = new ProgressDialog(this);
+        progressdialog.setMessage("MESSAGE");
+        progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressdialog.setIndeterminate(true);
     }
 
 

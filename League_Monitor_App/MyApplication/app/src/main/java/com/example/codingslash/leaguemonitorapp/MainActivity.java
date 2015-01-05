@@ -14,9 +14,12 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(this, PingTestActivity.class);
+        startActivity(intent);
     }
 
-    public void ping_activity_start(View view)
+    public void ping_test_activity(View view)
     {
         Intent intent = new Intent(this, PingTestActivity.class);
         startActivity(intent);
