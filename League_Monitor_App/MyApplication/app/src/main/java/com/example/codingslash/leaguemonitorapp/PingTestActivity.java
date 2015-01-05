@@ -20,7 +20,7 @@ public class PingTestActivity extends ActionBarActivity {
 
     ProgressDialog progressdialog;
 
-    private class PingTask extends AsyncTask<String, Void, Integer> {
+    private class PingTask extends AsyncTask<String, Void, Double> {
 
         private Context context;
         private PowerManager.WakeLock wakelock;
@@ -48,14 +48,14 @@ public class PingTestActivity extends ActionBarActivity {
 
         // run the ping test
         @Override
-        public Integer doInBackground(String... str) {
+        public Double doInBackground(String... str) {
             PingTest p = new PingTest(str[0]);
             return p.ping_time();
         }
 
         // display average ping time, hide progress dialog, enable button, release wakelock
         @Override
-        public  void onPostExecute(Integer num) {
+        public  void onPostExecute(Double num) {
             // display the times
             TextView t = (TextView)findViewById(R.id.text_ping_time);
             t.setText(num + " ms");

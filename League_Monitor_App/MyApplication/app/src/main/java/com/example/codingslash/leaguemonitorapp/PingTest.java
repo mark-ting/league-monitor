@@ -1,5 +1,7 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,9 +15,10 @@ public class PingTest {
 
     // reference/match strings
     private static int numpings = 8;
+    private static final String TAG = "PingTest";
 
-    private static String pingpath = "/system/bin/ping -c ";
-    private static Pattern timepattern = Pattern.compile(", time (\\d+)ms");
+    private static String pingpath = "/system/bin/ping";
+    private static Pattern timepattern = Pattern.compile(" = .+?/(.+?)/");
 
 
     // store class vars
@@ -33,7 +36,7 @@ public class PingTest {
     public String ping() {
         try {
             Process process = Runtime.getRuntime().exec(
-                    pingpath + numpings + " " + url);
+                    pingpath + " -c " + numpings + " " + url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
             int i;
@@ -45,7 +48,7 @@ public class PingTest {
 
             // body.append(output.toString()+"\n");
             res = output.toString();
-            // Log.d(TAG, str);
+            Log.d(TAG, res);
         } catch (IOException e) {
             // body.append("Error\n");
             e.printStackTrace();
@@ -53,7 +56,7 @@ public class PingTest {
         return res;
     }
 
-    public int ping_time() {
+    public double ping_time() {
         // if not pinged yet, ping
         if(res.equals("")) {
             ping();
@@ -61,7 +64,7 @@ public class PingTest {
 
         Matcher matcher = timepattern.matcher(res);
         if(matcher.find()) {
-            return (int)(Integer.parseInt(matcher.group(1))/numpings);
+            return Double.parseDouble(matcher.group(1));
         } else {
             return -1;
         }
