@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 public class PingTestActivity extends ActionBarActivity {
 
     public static final String TAG = "PingTestActivity";
+    public static final String RIOT_SERVER_IP = "216.52.241.254";
 
     ProgressDialog progressdialog;
 
@@ -32,7 +32,6 @@ public class PingTestActivity extends ActionBarActivity {
         // wake lock, show the progress dialog, disable button
         @Override
         public void onPreExecute() {
-            Log.d(TAG, "onPreExecute");
             // take CPU lock to prevent CPU from going off if the user
             // presses the power button during download
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -44,14 +43,12 @@ public class PingTestActivity extends ActionBarActivity {
             progressdialog.show();
 
             // disable button
-            ((Button)findViewById(R.id.button_ping_test)).setClickable(false);
+            findViewById(R.id.button_ping_test).setClickable(false);
         }
 
         // run the ping test
         @Override
         public Integer doInBackground(String... str) {
-            Log.d(TAG, "doInBackground");
-
             PingTest p = new PingTest(str[0]);
             return p.ping_time();
         }
@@ -59,8 +56,6 @@ public class PingTestActivity extends ActionBarActivity {
         // display average ping time, hide progress dialog, enable button, release wakelock
         @Override
         public  void onPostExecute(Integer num) {
-            Log.d(TAG, "onPostExecute");
-
             // display the times
             TextView t = (TextView)findViewById(R.id.text_ping_time);
             t.setText(num + " ms");
@@ -68,17 +63,17 @@ public class PingTestActivity extends ActionBarActivity {
             // hide progress dialog
                 progressdialog.hide();
 
-            // release wakelock
+            // release wake lock
             wakelock.release();
 
             // enable button
-            ((Button)findViewById(R.id.button_ping_test)).setClickable(true);
+            findViewById(R.id.button_ping_test).setClickable(true);
         }
     }
 
     public void run_ping_test(View view) {
         // execute the PingTask
-        new PingTask(this).execute("www.google.com");
+        new PingTask(this).execute(RIOT_SERVER_IP);
     }
 
     @Override
@@ -88,7 +83,7 @@ public class PingTestActivity extends ActionBarActivity {
 
         // instantiate private fields
         progressdialog = new ProgressDialog(this);
-        progressdialog.setMessage("MESSAGE");
+        progressdialog.setMessage("Running Ping Test...");
         progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressdialog.setIndeterminate(true);
     }

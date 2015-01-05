@@ -27,7 +27,7 @@ public class PingTest {
         res = "";
     }
 
-    /* code snippet taken from
+    /* original code snippet taken from
     http://stackoverflow.com/questions/14576710/ping-application-in-android
     */
     public String ping() {
