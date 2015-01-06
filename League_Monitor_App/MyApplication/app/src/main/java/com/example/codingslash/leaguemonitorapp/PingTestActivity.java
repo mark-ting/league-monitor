@@ -35,8 +35,8 @@ public class PingTestActivity extends ActionBarActivity {
             // take CPU lock to prevent CPU from going off if the user
             // presses the power button during download
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-           wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                    getClass().getName());
+            wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                getClass().getName());
             wakelock.acquire();
 
             // show progress dialog
@@ -61,7 +61,7 @@ public class PingTestActivity extends ActionBarActivity {
             t.setText(num + " ms");
 
             // hide progress dialog
-                progressdialog.hide();
+            progressdialog.hide();
 
             // release wake lock
             wakelock.release();
