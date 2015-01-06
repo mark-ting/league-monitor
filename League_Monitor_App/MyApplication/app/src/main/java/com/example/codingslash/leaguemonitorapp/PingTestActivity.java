@@ -16,9 +16,11 @@ import android.widget.TextView;
 public class PingTestActivity extends ActionBarActivity {
 
     public static final String TAG = "PingTestActivity";
-    public static final String RIOT_SERVER_IP = "216.52.241.254";
+    public static final String RIOT_SERVER_IP_NA = "216.52.241.254";
+    public static final String RIOT_SERVER_IP_EUW = "95.172.65.1";
+    public static final String RIOT_SERVER_IP_EUNE = "64.7.194.1";
 
-    ProgressDialog progressdialog;
+    private ProgressDialog progressdialog;
 
     private class PingTask extends AsyncTask<String, Void, Double> {
 
@@ -73,7 +75,7 @@ public class PingTestActivity extends ActionBarActivity {
 
     public void run_ping_test(View view) {
         // execute the PingTask
-        new PingTask(this).execute(RIOT_SERVER_IP);
+        new PingTask(this).execute(RIOT_SERVER_IP_NA);
     }
 
     @Override
