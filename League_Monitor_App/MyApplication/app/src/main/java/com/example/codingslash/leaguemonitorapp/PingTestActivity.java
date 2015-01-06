@@ -1,26 +1,52 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Debug;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 
 
 public class PingTestActivity extends ActionBarActivity {
 
     public static final String TAG = "PingTestActivity";
+
     public static final String RIOT_SERVER_IP_NA = "216.52.241.254";
     public static final String RIOT_SERVER_IP_EUW = "95.172.65.1";
     public static final String RIOT_SERVER_IP_EUNE = "64.7.194.1";
 
+    private String server = "NA";
+
     private ProgressDialog progressdialog;
+
+    private class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            server = (String)parent.getItemAtPosition(pos);
+            Log.d(TAG, server);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // nothing, since default is NA
+        }
+    }
 
     private class PingTask extends AsyncTask<String, Void, Double> {
 
@@ -73,9 +99,22 @@ public class PingTestActivity extends ActionBarActivity {
         }
     }
 
-    public void run_ping_test(View view) {
+    public void runPingTest(View view) {
+        PingTask pt = new PingTask(this);
         // execute the PingTask
-        new PingTask(this).execute(RIOT_SERVER_IP_NA);
+        switch(server) {
+            case "NA":
+                pt.execute(RIOT_SERVER_IP_NA);
+                break;
+            case "EUW":
+                pt.execute(RIOT_SERVER_IP_EUW);
+                break;
+            case "EUNE":
+                pt.execute(RIOT_SERVER_IP_EUNE);
+                break;
+            default:
+                pt.execute("www.google.com");
+        }
     }
 
     @Override
@@ -88,6 +127,19 @@ public class PingTestActivity extends ActionBarActivity {
         progressdialog.setMessage("Running Ping Test...");
         progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressdialog.setIndeterminate(true);
+        progressdialog.setCanceledOnTouchOutside(false);
+
+        // set default fields for spinner
+        Spinner spinner = (Spinner) findViewById(R.id.riot_server_region_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.riot_server_regions_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        // Set spinners item listener
+        spinner.setOnItemSelectedListener(new SpinnerActivity());
     }
 
 
