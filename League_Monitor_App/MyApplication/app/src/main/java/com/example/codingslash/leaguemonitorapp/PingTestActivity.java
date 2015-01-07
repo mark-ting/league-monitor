@@ -86,7 +86,11 @@ public class PingTestActivity extends ActionBarActivity {
         public  void onPostExecute(Double num) {
             // display the times
             TextView t = (TextView)findViewById(R.id.text_ping_time);
-            t.setText(num + " ms");
+            if(num != -1) {
+                t.setText(num + " ms");
+            } else {
+                t.setText("Unable to ping server");
+            }
 
             // hide progress dialog
             progressdialog.hide();
