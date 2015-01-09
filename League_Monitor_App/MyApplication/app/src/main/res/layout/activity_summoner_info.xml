@@ -4,18 +4,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.codingslash.leaguemonitorapp.LookupSummoner">
+    tools:context="com.example.codingslash.leaguemonitorapp.SummonerInfoActivity">
 
-    <EditText android:id="@+id/field_summoner_name"
+    <ViewText android:id="@+id/display_summoner_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:hint="@string/edit_summoner_name" />
+        android:text="SUMMONER_NAME"/>
+
+    <ViewText android:id="@+id/display_summoner_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_summoner_name"
+
+        android:text="SUMMONER_ID" />
 
     <Button android:id="@+id/button_query_runes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/field_summoner_name"
+        android:layout_below="@+id/display_summoner_id"
 
         android:text="@string/button_query_runes"
         android:onClick="queryRunes"/>
@@ -35,6 +42,5 @@
 
         android:text="@string/button_query_ladder"
         android:onClick="queryLadder"/>
-
 
 </RelativeLayout>

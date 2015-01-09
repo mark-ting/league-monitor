@@ -21,14 +21,9 @@ public class DummyDisplay extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Receive message from intent
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(LookupSummonerActivity.SUMMONER_NAME);
-
         // Create text view
         TextView textView = new TextView(this);
         textView.setTextSize(40);
-        textView.setText(message);
 
         // Set text view as activity layout
         setContentView(textView);
