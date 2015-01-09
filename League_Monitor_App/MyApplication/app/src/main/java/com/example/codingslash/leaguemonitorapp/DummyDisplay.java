@@ -1,38 +1,43 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
+public class DummyDisplay extends ActionBarActivity {
 
-public class MainActivity extends ActionBarActivity {
+    // Receive message from intent
+    Intent intent = getIntent();
+    ProgressDialog progressdialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
 
-    /** Called when the user clicks the Send button **/
-    public void querySummoner (View view) {
-        Intent intent = new Intent(this, LookupSummonerActivity.class);
-        startActivity(intent);
-    }
+        // Receive message from intent
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(LookupSummonerActivity.SUMMONER_NAME);
 
-    public void pingTestActivity(View view)
-    {
-        Intent intent = new Intent(this, PingTestActivity.class);
-        startActivity(intent);
+        // Create text view
+        TextView textView = new TextView(this);
+        textView.setTextSize(40);
+        textView.setText(message);
+
+        // Set text view as activity layout
+        setContentView(textView);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_dummy_display, menu);
         return true;
     }
 

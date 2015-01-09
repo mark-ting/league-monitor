@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.codingslash.leaguemonitorapp.LookupSummoner">
+
+    <EditText android:id="@+id/field_summoner_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:hint="@string/edit_summoner_name" />
+
+    <Button android:id="@+id/button_query_runes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/field_summoner_name"
+
+        android:text="@string/button_query_runes"
+        android:onClick="queryRunes"/>
+
+    <Button android:id="@+id/button_query_masteries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_query_runes"
+
+        android:text="@string/button_query_masteries"
+        android:onClick="queryMasteries"/>
+
+    <Button android:id="@+id/button_query_ladder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_query_masteries"
+
+        android:text="@string/button_query_ladder"
+        android:onClick="queryLadder"/>
+
+
+</RelativeLayout>

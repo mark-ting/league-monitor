@@ -27,6 +27,46 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.codingslash.leaguemonitorapp.MainActivity" />
         </activity>
+        <activity
+            android:name=".GetRunePage"
+            android:label="@string/title_activity_get_rune_page"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.codingslash.leaguemonitorapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".QuerySummoner"
+            android:label="@string/title_activity_query_summoner"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.codingslash.leaguemonitorapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".LookupSummoner"
+            android:label="@string/title_activity_lookup_summoner"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.codingslash.leaguemonitorapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".DummyDisplay"
+            android:label="@string/title_activity_dummy_display"
+            android:parentActivityName=".LookupSummoner" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.codingslash.leaguemonitorapp.LookupSummoner" />
+        </activity>
+        <activity
+            android:name=".LookupSummonerActivity"
+            android:label="@string/title_activity_lookup_summoner"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.codingslash.leaguemonitorapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

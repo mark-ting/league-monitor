@@ -3,13 +3,12 @@ package com.example.codingslash.leaguemonitorapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -55,7 +54,7 @@ public class PingTestActivity extends ActionBarActivity {
 
         // display average ping time, hide progress dialog, enable button, release wakelock
         @Override
-        public  void onPostExecute(Double num) {
+        public void onPostExecute(Double num) {
             // display the times
             TextView t = (TextView)findViewById(R.id.text_ping_time);
             t.setText(num + " ms");
