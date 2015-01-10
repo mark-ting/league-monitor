@@ -5,6 +5,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+
+    <!-- unused: need to clean -->
+    <string name="title_activity_get_rune_page">Dummy Display</string>
+    <string name="title_activity_query_summoner">Dummy Display</string>
+    <string name="title_activity_lookup_summoner">Dummy Display</string>
+
+
+
+
+
     <string name="title_activity_dummy_display">Dummy Display</string>
     <string name="title_activity_ping_test">Ping Test</string>
     <string name="title_activity_summoner_info">SummonerInfoActivity</string>
