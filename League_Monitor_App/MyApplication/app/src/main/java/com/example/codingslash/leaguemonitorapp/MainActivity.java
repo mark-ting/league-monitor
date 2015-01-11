@@ -1,7 +1,9 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.PowerManager;
@@ -71,15 +73,14 @@ public class MainActivity extends ActionBarActivity {
 
             if (summoners != null) {
                 summoner = summoners.get(key);
-                info.id = summoner.getId();
-                info.name = summoner.getName();
-                info.level = summoner.getSummonerLevel();
-
+                info.setSummId(summoner.getId());
+                info.setSummName(summoner.getName());
+                info.setSummLevel(summoner.getSummonerLevel());
             } else {
                 // dummy ID indicates not found
-                info.id = 1234567890L;
-                info.name = "SUMMONER NOT FOUND";
-                info.level = 0;
+                info.setSummId(-1L);
+                info.setSummName("SUMMONER NOT FOUND");
+                info.setSummLevel(-1L);
             }
 
             return info;
@@ -96,15 +97,14 @@ public class MainActivity extends ActionBarActivity {
 
             Intent intent = new Intent(context, SummonerInfoActivity.class);
 
-            if (info.id == 1234567890L) {
+            if (info.getSummId() == -1L) {
                 // toast for ID not found
                 Toast.makeText(context, "Summoner ID NOT FOUND", Toast.LENGTH_LONG).show();
             } else {
                 // toast for ID found
                 Toast.makeText(context, "Summoner ID FOUND", Toast.LENGTH_LONG).show();
 
-                intent.putExtra("SUMMONER_NAME", info.name);
-                intent.putExtra("SUMMONER_ID", info.id);
+                intent.putExtra("SUMMONER_INFO", info);
             }
             startActivity(intent);
 
@@ -127,7 +127,45 @@ public class MainActivity extends ActionBarActivity {
     public void querySummoner (View view) {
         EditText summonernamefield = (EditText) findViewById(R.id.field_summoner_name);
         String summonername = summonernamefield.getText().toString();
-        new LookupSummonerID(this).execute(summonername);
+
+        // TODO MAKE A MORE ROBUST CHECK FOR USER INPUT
+
+        // checkUserInput();
+
+        if (summonername != "") {
+            new LookupSummonerID(this).execute(summonername);
+        } else {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    getApplicationContext());
+
+            // set title
+            alertDialogBuilder.setTitle("Warning!");
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Please enter a summoner to look up!")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, close
+                            // current activity
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+        }
     }
 
     public void pingTestActivity(View view)
@@ -158,3 +196,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+
+

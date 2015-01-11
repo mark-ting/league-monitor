@@ -19,13 +19,20 @@
 
         android:text="SUMMONER_ID" />
 
-    <Button android:id="@+id/button_query_runes"
+    <TextView android:id="@+id/display_summoner_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/display_summoner_id"
 
+        android:text="SUMMONER_LEVEL" />
+
+    <Button android:id="@+id/button_query_runes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_summoner_level"
+
         android:text="@string/button_query_runes"
-        android:onClick="queryRunes"/>
+        android:onClick="queryRunes" />
 
     <Button android:id="@+id/button_query_masteries"
         android:layout_width="wrap_content"

@@ -51,8 +51,7 @@ public class SummonerInfoActivity extends ActionBarActivity {
 
         // Receive message from intent
         Intent intent = getIntent();
-        String summonername = intent.getStringExtra("SUMMONER_NAME");
-        long summonerid = intent.getLongExtra("SUMMONER_ID", 0);
+        SummonerInfo info = intent.getParcelableExtra("SUMMONER_INFO");
 
         // Create text view
         TextView textView = new TextView(this);
@@ -60,9 +59,11 @@ public class SummonerInfoActivity extends ActionBarActivity {
 
         TextView name = (TextView)findViewById(R.id.display_summoner_name);
         TextView id = (TextView)findViewById(R.id.display_summoner_id);
+        TextView level = (TextView)findViewById(R.id.display_summoner_level);
 
-        name.setText("SUMMONER ID: " + summonerid);
-        id.setText("SUMMONER NAME: " + summonername);
+        name.setText("SUMMONER ID: " + info.getSummId());
+        id.setText("SUMMONER NAME: " + info.getSummName());
+        level.setText("SUMMONER LEVEL: " + info.getSummLevel());
     }
 
     @Override
