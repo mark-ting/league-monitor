@@ -12,15 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Map;
-
-import constant.Region;
-import dto.Summoner.Summoner;
-import main.java.riotapi.RiotApi;
-import main.java.riotapi.RiotApiException;
-
 
 public class SummonerInfoActivity extends ActionBarActivity {
 

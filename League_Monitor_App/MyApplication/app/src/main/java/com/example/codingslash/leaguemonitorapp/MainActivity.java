@@ -20,15 +20,11 @@ import dto.Summoner.Summoner;
 import main.java.riotapi.RiotApi;
 import main.java.riotapi.RiotApiException;
 
-
 public class MainActivity extends ActionBarActivity {
-
-//    public final static String SUMMONER_NAME = "com.example.codingslash.leaguemonitorapp.SUMMONERNAME";
-//    public final static String SUMMONER_ID = "come.example.codingslash.leaguemonitorapp.SUMMONERID";
 
     ProgressDialog progressdialog;
 
-    private class LookupSummonerID extends AsyncTask<String, Void, Long> {
+    private class LookupSummonerID extends AsyncTask<String, Void, SummonerInfo> {
 
         private Context context;
         private PowerManager.WakeLock wakelock;
@@ -50,36 +46,47 @@ public class MainActivity extends ActionBarActivity {
         }
 
         @Override
-        protected Long doInBackground(String... input) {
+        protected SummonerInfo doInBackground(String... input) {
 
             RiotApi api = new RiotApi(context.getString(R.string.riot_api_key));
 
-            api.setRegion(Region.NA);
+            // raw user input
+            String query = input[0];
+
+            // processed map key
+            String key = (query.replaceAll("\\s+","")).toLowerCase();
 
             Map<String, Summoner> summoners = null;
             try {
-                summoners = api.getSummonersByName(input[0]);
+                summoners = api.getSummonersByName(Region.NA, query);
             } catch (RiotApiException e) {
                 e.printStackTrace();
             }
 
+            // initialize new container for summoner information
+            SummonerInfo info = new SummonerInfo();
+
             // default ID indicates below segment not running
             Summoner summoner;
-            long id;
 
             if (summoners != null) {
-                summoner = summoners.get(input[0]);
-                id = summoner.getId();
+                summoner = summoners.get(key);
+                info.id = summoner.getId();
+                info.name = summoner.getName();
+                info.level = summoner.getSummonerLevel();
+
             } else {
                 // dummy ID indicates not found
-                id = 1234567890L;
+                info.id = 1234567890L;
+                info.name = "SUMMONER NOT FOUND";
+                info.level = 0;
             }
 
-            return id;
+            return info;
         }
 
         @Override
-        protected void onPostExecute(Long summonerid) {
+        protected void onPostExecute(SummonerInfo info) {
 
             // hide progress dialog
             progressdialog.hide();
@@ -87,23 +94,17 @@ public class MainActivity extends ActionBarActivity {
             // release wake lock
             wakelock.release();
 
-            // TODO: FILL OUT INTENT SO IT ISNT BROKEN
-            Intent intent = new Intent(getApplicationContext(), SummonerInfoActivity.class);
-            EditText editText = (EditText) findViewById(R.id.field_summoner_name);
+            Intent intent = new Intent(context, SummonerInfoActivity.class);
 
-            String summonername = editText.getText().toString();
-
-            if (summonerid == 1234567890L) {
+            if (info.id == 1234567890L) {
                 // toast for ID not found
                 Toast.makeText(context, "Summoner ID NOT FOUND", Toast.LENGTH_LONG).show();
-
-                intent.putExtra("SUMMONER_NAME", "SUMMONER NOT FOUND");
             } else {
                 // toast for ID found
                 Toast.makeText(context, "Summoner ID FOUND", Toast.LENGTH_LONG).show();
 
-                intent.putExtra("SUMMONER_NAME", summonername);
-                intent.putExtra("SUMMONER_ID", summonerid);
+                intent.putExtra("SUMMONER_NAME", info.name);
+                intent.putExtra("SUMMONER_ID", info.id);
             }
             startActivity(intent);
 
