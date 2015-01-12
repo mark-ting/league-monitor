@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="riot-api-key">YOUR API KEY HERE</string>
+    <string name="riot_api_key">YOUR API KEY HERE</string>
 </resources>

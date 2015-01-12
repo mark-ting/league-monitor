@@ -19,7 +19,6 @@
     <string name="button_query_ladder">Lookup Rank</string>
 
     <string name="text_ping_time">Ping Test not run yet</string>
-    <string name="button_ping_test">Test Ping</string>
 
     <string-array name="riot_server_regions_array">
         <item>NA</item>

@@ -4,31 +4,20 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-<<<<<<< HEAD
+
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-=======
-import android.os.Debug;
-import android.os.PowerManager;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
+
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
->>>>>>> a8869ac8cf97ccef8e989abf480ffc1cfda7a091
-import android.widget.TextView;
 
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
+import android.widget.TextView;
 
 
 public class PingTestActivity extends ActionBarActivity {
