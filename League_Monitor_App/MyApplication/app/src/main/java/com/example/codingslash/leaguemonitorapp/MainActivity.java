@@ -69,9 +69,8 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(context, "Summoner ID FOUND", Toast.LENGTH_LONG).show();
 
                 intent.putExtra("SUMMONER_INFO", info);
+                startActivity(intent);
             }
-
-            startActivity(intent);
         }
     }
 

@@ -24,10 +24,10 @@ public class ValidateInput {
 
         if (input.trim().equals(""))
         {
-            Log.i("ValidateInput", "Input INVALID");
+            // name invalid
             return false;
         } else {
-            Log.i("ValidateInput", "Input VALID");
+            // name valid
             return true;
         }
     }
