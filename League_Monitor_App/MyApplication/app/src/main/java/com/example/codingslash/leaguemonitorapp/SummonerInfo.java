@@ -3,6 +3,9 @@ package com.example.codingslash.leaguemonitorapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import dto.Summoner.MasteryPage;
+import dto.Summoner.RunePage;
+
 /**
  * Created by Operator on 1/9/2015.
  */
@@ -14,6 +17,10 @@ public class SummonerInfo implements Parcelable {
     private Long id;
     private String name; // summoner name (with proper capitalization--NOT THE MAPPED KEY!)
     private Long level;
+
+    // TODO: Assign getters/setters and function calls for these
+    private MasteryPage activeMasteryPage;
+    private RunePage activeRunePage;
 
     // getters
     public Long getSummId() {

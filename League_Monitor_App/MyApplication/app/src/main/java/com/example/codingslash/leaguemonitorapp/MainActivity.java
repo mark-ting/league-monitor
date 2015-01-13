@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected SummonerInfo doInBackground(String... input) {
-            LookupSummonerInfo lookup = new LookupSummonerInfo(apikey);
+            LookupSummoner lookup = new LookupSummoner(apikey);
             return lookup.lookupSummoner(input[0]);
         }
 
