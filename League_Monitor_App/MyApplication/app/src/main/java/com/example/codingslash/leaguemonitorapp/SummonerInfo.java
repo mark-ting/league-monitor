@@ -15,22 +15,13 @@ public class SummonerInfo implements Parcelable {
     private String name; // summoner name (with proper capitalization--NOT THE MAPPED KEY!)
     private Long level;
 
-//    // class constructor
-//    public SummonerInfo(Long id, String name, Long level) {
-//        this.id = id;
-//        this.name = name;
-//        this.level = level;
-//    }
-
     // getters
     public Long getSummId() {
         return this.id;
     }
-
     public String getSummName() {
         return this.name;
     }
-
     public Long getSummLevel() {
         return this.level;
     }
@@ -39,11 +30,9 @@ public class SummonerInfo implements Parcelable {
     public void setSummId(Long id) {
         this.id = id;
     }
-
     public void setSummName(String name) {
         this.name = name;
     }
-
     public void setSummLevel(Long level) {
         this.level = level;
     }

@@ -15,10 +15,6 @@ import android.widget.TextView;
 
 public class SummonerInfoActivity extends ActionBarActivity {
 
-    // Receive message from intent
-    Intent intent = getIntent();
-    ProgressDialog progressdialog;
-
     public void queryRunes(View view) {
         Intent intent = new Intent(this, DummyDisplay.class);
         EditText editText = (EditText) findViewById(R.id.field_summoner_name);

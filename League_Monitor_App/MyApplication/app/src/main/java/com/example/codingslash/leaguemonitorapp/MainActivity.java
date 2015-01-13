@@ -1,9 +1,7 @@
 package com.example.codingslash.leaguemonitorapp;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.PowerManager;
@@ -15,23 +13,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Map;
-
-import constant.Region;
-import dto.Summoner.Summoner;
-import main.java.riotapi.RiotApi;
-import main.java.riotapi.RiotApiException;
-
 public class MainActivity extends ActionBarActivity {
 
-    ProgressDialog progressdialog;
+    private ProgressDialog progressdialog;
 
-    private class LookupSummonerID extends AsyncTask<String, Void, SummonerInfo> {
+    private class SummonerLookup extends AsyncTask<String, Void, SummonerInfo> {
+
+
 
         private Context context;
+        private String apikey;
+
         private PowerManager.WakeLock wakelock;
-        public LookupSummonerID(Context contextin) {
-            context = contextin;
+
+        public SummonerLookup(Context contextin) {
+            this.context = contextin;
+            apikey = context.getString(R.string.riot_api_key);
         }
 
         @Override
@@ -49,41 +46,8 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected SummonerInfo doInBackground(String... input) {
-
-            RiotApi api = new RiotApi(context.getString(R.string.riot_api_key));
-
-            // raw user input
-            String query = input[0];
-
-            // processed map key
-            String key = (query.replaceAll("\\s+","")).toLowerCase();
-
-            Map<String, Summoner> summoners = null;
-            try {
-                summoners = api.getSummonersByName(Region.NA, query);
-            } catch (RiotApiException e) {
-                e.printStackTrace();
-            }
-
-            // initialize new container for summoner information
-            SummonerInfo info = new SummonerInfo();
-
-            // default ID indicates below segment not running
-            Summoner summoner;
-
-            if (summoners != null) {
-                summoner = summoners.get(key);
-                info.setSummId(summoner.getId());
-                info.setSummName(summoner.getName());
-                info.setSummLevel(summoner.getSummonerLevel());
-            } else {
-                // dummy ID indicates not found
-                info.setSummId(-1L);
-                info.setSummName("SUMMONER NOT FOUND");
-                info.setSummLevel(-1L);
-            }
-
-            return info;
+            LookupSummonerInfo lookup = new LookupSummonerInfo(apikey);
+            return lookup.lookupSummoner(input[0]);
         }
 
         @Override
@@ -106,8 +70,8 @@ public class MainActivity extends ActionBarActivity {
 
                 intent.putExtra("SUMMONER_INFO", info);
             }
-            startActivity(intent);
 
+            startActivity(intent);
         }
     }
 
@@ -118,53 +82,23 @@ public class MainActivity extends ActionBarActivity {
 
         // instantiate private fields
         progressdialog = new ProgressDialog(this);
-        progressdialog.setMessage("Running ID Lookup...");
+        progressdialog.setMessage("Looking for summoner...");
         progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressdialog.setIndeterminate(true);
+        progressdialog.setCanceledOnTouchOutside(false);
     }
 
-    /** Called when the user clicks the Send button **/
+    /** Called when the user clicks the Lookup Summoner button **/
     public void querySummoner (View view) {
         EditText summonernamefield = (EditText) findViewById(R.id.field_summoner_name);
         String summonername = summonernamefield.getText().toString();
 
         // TODO MAKE A MORE ROBUST CHECK FOR USER INPUT
 
-        // checkUserInput();
-
-        if (summonername != "") {
-            new LookupSummonerID(this).execute(summonername);
+        if (ValidateInput.validateInput(summonername)) {
+            new SummonerLookup(this).execute(summonername);
         } else {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    getApplicationContext());
-
-            // set title
-            alertDialogBuilder.setTitle("Warning!");
-
-            // set dialog message
-            alertDialogBuilder
-                    .setMessage("Please enter a summoner to look up!")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, close
-                            // current activity
-                            MainActivity.this.finish();
-                        }
-                    })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, just close
-                            // the dialog box and do nothing
-                            dialog.cancel();
-                        }
-                    });
-
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // show it
-            alertDialog.show();
+            summonernamefield.setError("Please enter a summoner name!");
         }
     }
 
