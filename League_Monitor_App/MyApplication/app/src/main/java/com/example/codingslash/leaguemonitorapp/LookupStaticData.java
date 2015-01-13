@@ -2,10 +2,13 @@ package com.example.codingslash.leaguemonitorapp;
 
 import java.util.Map;
 
-import constant.Region;
-import dto.Champion.Champion;
-import main.java.riotapi.RiotApi;
-import main.java.riotapi.RiotApiException;
+import com.robrua.orianna.api.RateLimiter;
+import com.robrua.orianna.api.RiotAPI;
+import com.robrua.orianna.api.queryspecs.Region;
+import com.robrua.orianna.type.league.League;
+import com.robrua.orianna.type.league.LeagueType;
+import com.robrua.orianna.type.staticdata.Champion;
+import com.robrua.orianna.type.summoner.Summoner;
 
 /**
  * Created by Operator on 1/13/2015.
@@ -13,10 +16,10 @@ import main.java.riotapi.RiotApiException;
  */
 public class LookupStaticData {
 
-    private RiotApi api;
+    private RiotAPI api;
 
     public LookupStaticData(String apikey) {
-        this.api = new RiotApi(apikey);
+        this.api = new RiotAPI(Region.NA, apikey, RateLimiter.defaultDevelopmentRateLimiter());
     }
 
     public Champion lookupChampion(String region, int id) {
@@ -24,11 +27,7 @@ public class LookupStaticData {
         //
         Champion champion = null;
 
-        try {
-            champion = api.getChampionById(id);
-        } catch (RiotApiException e) {
-            e.printStackTrace();
-        }
+        champion = api.getChampion(id);
 
         if (champion != null) {
             return champion;

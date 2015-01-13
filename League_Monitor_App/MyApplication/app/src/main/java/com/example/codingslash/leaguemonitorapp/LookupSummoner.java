@@ -2,10 +2,13 @@ package com.example.codingslash.leaguemonitorapp;
 
 import java.util.Map;
 
-import constant.Region;
-import dto.Summoner.Summoner;
-import main.java.riotapi.RiotApi;
-import main.java.riotapi.RiotApiException;
+import com.robrua.orianna.api.RateLimiter;
+import com.robrua.orianna.api.RiotAPI;
+import com.robrua.orianna.api.queryspecs.Region;
+import com.robrua.orianna.type.league.League;
+import com.robrua.orianna.type.league.LeagueType;
+import com.robrua.orianna.type.staticdata.Champion;
+import com.robrua.orianna.type.summoner.Summoner;
 
 /**
  * Created by Operator on 1/12/2015.
@@ -13,10 +16,10 @@ import main.java.riotapi.RiotApiException;
  */
 public class LookupSummoner {
 
-    private RiotApi api;
+    private RiotAPI api;
 
     public LookupSummoner(String apikey) {
-        this.api = new RiotApi(apikey);
+        this.api = new RiotAPI(Region.NA, apikey, RateLimiter.defaultDevelopmentRateLimiter());;
     }
 
     public SummonerInfo lookupSummoner(String input) {
@@ -24,24 +27,16 @@ public class LookupSummoner {
         // processed input - map key
         String key = (input.replaceAll("\\s+", "")).toLowerCase();
 
-        Map<String, Summoner> summoners = null;
-        try {
-            summoners = api.getSummonersByName(Region.NA, input);
-        } catch (RiotApiException e) {
-            e.printStackTrace();
-        }
+        // get the summoner
+        Summoner summoner = api.getSummoner(input);
 
         // initialize new container for summoner information
         SummonerInfo info = new SummonerInfo();
 
-        // default ID indicates below segment not running
-        Summoner summoner = null;
-
-        if (summoners != null) {
-            summoner = summoners.get(key);
-            info.setSummId(summoner.getId());
-            info.setSummName(summoner.getName());
-            info.setSummLevel(summoner.getSummonerLevel());
+        if (summoner != null) {
+            info.setSummId(summoner.ID);
+            info.setSummName(summoner.name);
+            info.setSummLevel(summoner.summonerLevel);
         } else {
             // dummy ID indicates not found
             info.setSummId(-1L);
