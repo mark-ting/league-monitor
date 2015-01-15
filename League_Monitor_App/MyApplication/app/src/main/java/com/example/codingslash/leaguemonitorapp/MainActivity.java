@@ -13,11 +13,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.robrua.orianna.type.summoner.Summoner;
+
 public class MainActivity extends ActionBarActivity {
 
     private ProgressDialog progressdialog;
 
-    private class SummonerLookup extends AsyncTask<String, Void, SummonerInfo> {
+    private class SummonerLookup extends AsyncTask<String, Void, Summoner> {
 
 
 
@@ -45,13 +47,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         @Override
-        protected SummonerInfo doInBackground(String... input) {
+        protected Summoner doInBackground(String... input) {
             LookupSummoner lookup = new LookupSummoner(apikey);
             return lookup.lookupSummoner(input[0]);
         }
 
         @Override
-        protected void onPostExecute(SummonerInfo info) {
+        protected void onPostExecute(Summoner info) {
 
             // hide progress dialog
             progressdialog.hide();
@@ -61,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
 
             Intent intent = new Intent(context, SummonerInfoActivity.class);
 
-            if (info.getSummId() == -1L) {
+            if (info == null) {
                 // toast for ID not found
                 Toast.makeText(context, "Summoner ID NOT FOUND", Toast.LENGTH_LONG).show();
             } else {

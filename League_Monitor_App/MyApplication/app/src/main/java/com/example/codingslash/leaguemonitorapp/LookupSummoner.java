@@ -1,7 +1,10 @@
 package com.example.codingslash.leaguemonitorapp;
 
+import android.util.Log;
+
 import java.util.Map;
 
+import com.robrua.orianna.api.APIException;
 import com.robrua.orianna.api.RateLimiter;
 import com.robrua.orianna.api.RiotAPI;
 import com.robrua.orianna.api.queryspecs.Region;
@@ -16,34 +19,25 @@ import com.robrua.orianna.type.summoner.Summoner;
  */
 public class LookupSummoner {
 
+    public static final String TAG = "LookupSummoner";
+
     private RiotAPI api;
 
     public LookupSummoner(String apikey) {
-        this.api = new RiotAPI(Region.NA, apikey, RateLimiter.defaultDevelopmentRateLimiter());;
+        this.api = new RiotAPI(Region.NA, apikey, RateLimiter.defaultDevelopmentRateLimiter());
     }
 
-    public SummonerInfo lookupSummoner(String input) {
+    public Summoner lookupSummoner(String input) {
 
-        // processed input - map key
-        String key = (input.replaceAll("\\s+", "")).toLowerCase();
+        // get the summoner and return
+        Summoner summoner = null;
 
-        // get the summoner
-        Summoner summoner = api.getSummoner(input);
-
-        // initialize new container for summoner information
-        SummonerInfo info = new SummonerInfo();
-
-        if (summoner != null) {
-            info.setSummId(summoner.ID);
-            info.setSummName(summoner.name);
-            info.setSummLevel(summoner.summonerLevel);
-        } else {
-            // dummy ID indicates not found
-            info.setSummId(-1L);
-            info.setSummName("SUMMONER NOT FOUND");
-            info.setSummLevel(-1L);
+        try {
+            summoner = api.getSummoner(input);
+        } catch(APIException e) {
+            Log.e(TAG, "Error occurred while requesting summoner info: ", e);
         }
 
-        return info;
+        return api.getSummoner(input);
     }
 }
