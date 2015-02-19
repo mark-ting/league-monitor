@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.robrua.orianna.type.summoner.Summoner;
+import com.robrua.orianna.type.core.summoner.Summoner;
 
 public class MainActivity extends ActionBarActivity {
 

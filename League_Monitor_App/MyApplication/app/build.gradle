@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:2.5.0'
+        //classpath 'me.tatarka:gradle-retrolambda:2.5.0'
     }
 }
 
@@ -14,7 +14,7 @@ repositories {
 }
 
 apply plugin: 'com.android.application' //or apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 21
@@ -33,11 +33,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -45,5 +40,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/riot-api-java.jar')
     compile files('libs/gson-2.3.1.jar')
-    compile files('libs/orianna-1.4.3.jar')
+    compile files('libs/orianna-2.0.2.jar')
 }

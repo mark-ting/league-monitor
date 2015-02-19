@@ -2,13 +2,9 @@ package com.example.codingslash.leaguemonitorapp;
 
 import java.util.Map;
 
-import com.robrua.orianna.api.RateLimiter;
-import com.robrua.orianna.api.RiotAPI;
-import com.robrua.orianna.api.queryspecs.Region;
-import com.robrua.orianna.type.league.League;
-import com.robrua.orianna.type.league.LeagueType;
-import com.robrua.orianna.type.staticdata.Champion;
-import com.robrua.orianna.type.summoner.Summoner;
+import com.robrua.orianna.api.core.RiotAPI;
+import com.robrua.orianna.type.core.common.Region;
+import com.robrua.orianna.type.core.staticdata.Champion;
 
 /**
  * Created by Operator on 1/13/2015.
@@ -19,12 +15,12 @@ public class LookupStaticData {
     private RiotAPI api;
 
     public LookupStaticData(String apikey) {
-        this.api = new RiotAPI(Region.NA, apikey, RateLimiter.defaultDevelopmentRateLimiter());
+        RiotAPI.setAPIKey(apikey);
+        RiotAPI.setRegion(Region.NA); //implement switching later
     }
 
     public Champion lookupChampion(String region, int id) {
 
-        //
         Champion champion = null;
 
         champion = api.getChampion(id);

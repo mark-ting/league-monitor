@@ -13,7 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.robrua.orianna.type.summoner.Summoner;
+import com.robrua.orianna.type.core.summoner.Summoner;
+
 
 public class SummonerInfoActivity extends ActionBarActivity {
 
@@ -59,9 +60,9 @@ public class SummonerInfoActivity extends ActionBarActivity {
         TextView id = (TextView)findViewById(R.id.display_summoner_id);
         TextView level = (TextView)findViewById(R.id.display_summoner_level);
 
-        name.setText("SUMMONER ID: " + info.ID);
-        id.setText("SUMMONER NAME: " + info.name);
-        level.setText("SUMMONER LEVEL: " + info.summonerLevel);
+        name.setText("SUMMONER ID: " + info.getID());
+        id.setText("SUMMONER NAME: " + info.getName());
+        level.setText("SUMMONER LEVEL: " + info.getLevel());
     }
 
     @Override
