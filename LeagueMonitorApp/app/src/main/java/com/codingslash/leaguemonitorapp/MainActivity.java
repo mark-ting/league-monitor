@@ -13,7 +13,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.robrua.orianna.api.core.AsyncRiotAPI;
+import com.robrua.orianna.api.core.RiotAPI;
+import com.robrua.orianna.type.api.Action;
+import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.summoner.Summoner;
+import com.robrua.orianna.type.exception.APIException;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -21,6 +26,20 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AsyncRiotAPI.setMirror(Region.NA);
+        AsyncRiotAPI.setRegion(Region.NA);
+        AsyncRiotAPI.setAPIKey(getString(R.string.riot_api_key));
+
+        AsyncRiotAPI.getSummonerByName(new Action<Summoner>() {
+            @Override
+            public void perform(Summoner summoner) {
+                System.out.println(summoner.getName() + " is a level " + summoner.getLevel() + " summoner on the NA server.");
+            }
+
+            public void handle(APIException e) {
+                System.out.println("Couldn't get summoner FatalElement");
+            }
+        }, "FatalElement");
     }
 
     public void pingTestActivity(View view)
