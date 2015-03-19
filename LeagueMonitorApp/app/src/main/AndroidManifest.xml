@@ -27,6 +27,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codingslash.leaguemonitorapp.MainActivity" />
         </activity>
+        <activity
+            android:name=".LookupSummonerActivity"
+            android:label="@string/title_activity_lookup_summoner"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codingslash.leaguemonitorapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

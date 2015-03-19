@@ -14,13 +14,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.robrua.orianna.api.core.AsyncRiotAPI;
-import com.robrua.orianna.api.core.RiotAPI;
 import com.robrua.orianna.type.api.Action;
 import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.summoner.Summoner;
 import com.robrua.orianna.type.exception.APIException;
 
 public class MainActivity extends ActionBarActivity {
+
+    public final static String SUMMONER_NAME = "com.codingslash.leaguemonitorapp.SUMMONER_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,16 @@ public class MainActivity extends ActionBarActivity {
     public void pingTestActivity(View view)
     {
         Intent intent = new Intent(this, PingTestActivity.class);
+        startActivity(intent);
+    }
+
+    public void lookupSummonerActivity(View view)
+    {
+        EditText summonernamefield = (EditText) findViewById(R.id.field_summoner_name);
+        String summonername = String.valueOf(summonernamefield.getText());
+
+        Intent intent = new Intent(this, LookupSummonerActivity.class);
+        intent.putExtra(SUMMONER_NAME, summonername);
         startActivity(intent);
     }
 

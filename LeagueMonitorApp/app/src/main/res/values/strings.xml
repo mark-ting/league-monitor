@@ -5,17 +5,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_dummy_display">Dummy Display</string>
     <string name="title_activity_ping_test">Ping Test</string>
-    <string name="title_activity_summoner_info">SummonerInfoActivity</string>
+    <string name="title_activity_lookup_summoner">Lookup Summoner</string>
 
     <string name="field_summoner_name">Summoner</string>
-
     <string name="button_summoner_info">Summoner Lookup</string>
-
-    <string name="button_query_runes">Lookup Runes</string>
-    <string name="button_query_masteries">Lookup Masteries</string>
-    <string name="button_query_ladder">Lookup Rank</string>
 
     <string name="text_ping_time">Ping Test not run yet</string>
     <string name="button_ping_test">Test Ping</string>
