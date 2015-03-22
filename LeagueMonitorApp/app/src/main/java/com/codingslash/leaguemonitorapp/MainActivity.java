@@ -21,8 +21,6 @@ import com.robrua.orianna.type.exception.APIException;
 
 public class MainActivity extends ActionBarActivity {
 
-    public final static String SUMMONER_NAME = "com.codingslash.leaguemonitorapp.SUMMONER_NAME";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,19 +41,17 @@ public class MainActivity extends ActionBarActivity {
         }, "FatalElement");
     }
 
-    public void pingTestActivity(View view)
-    {
+    public void pingTestActivity(View view) {
         Intent intent = new Intent(this, PingTestActivity.class);
         startActivity(intent);
     }
 
-    public void lookupSummonerActivity(View view)
-    {
+    public void lookupSummonerActivity(View view) {
         EditText summonernamefield = (EditText) findViewById(R.id.field_summoner_name);
         String summonername = String.valueOf(summonernamefield.getText());
 
         Intent intent = new Intent(this, LookupSummonerActivity.class);
-        intent.putExtra(SUMMONER_NAME, summonername);
+        intent.putExtra(getString(R.string.SUMMONER_NAME), summonername);
         startActivity(intent);
     }
 
